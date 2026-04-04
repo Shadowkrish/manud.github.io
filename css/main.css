@@ -1,0 +1,415 @@
+/* =============================================
+   LINUX TERMINAL LIVE BACKGROUND
+   ============================================= */
+
+/* Full-page terminal canvas behind everything */
+#terminal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #0a0f0a;
+}
+
+/* Dark theme for body */
+body.bg-light {
+  background: transparent !important;
+}
+
+/* Header dark styling */
+header {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border-bottom: 1px solid #00ff4133;
+  backdrop-filter: blur(6px);
+}
+
+header .site-title,
+header .nav-link {
+  color: #00ff41 !important;
+  text-shadow: 0 0 8px #00ff4188;
+}
+
+header .nav-link:hover {
+  color: #00ffaa !important;
+  opacity: 1;
+}
+
+/* Content cards — dark glass look */
+.shadow-1-strong.bg-white {
+  background: rgba(5, 15, 5, 0.88) !important;
+  border: 1px solid #00ff4122;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.08), 0 4px 24px rgba(0,0,0,0.7) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+}
+
+/* Section headings */
+.h2.fw-light,
+h2.h2 {
+  color: #00ff41 !important;
+  text-shadow: 0 0 12px #00ff4155;
+}
+
+/* Body text */
+.about-section p,
+.timeline-body div,
+.timeline-body li,
+.timeline-body ul {
+  color: #b0d4b0 !important;
+}
+
+/* Bio labels */
+.fw-bolder {
+  color: #00ff41 !important;
+}
+
+.pb-2:not(.fw-bolder) {
+  color: #8ccc8c !important;
+}
+
+/* Timeline head text */
+.timeline-head .h5 {
+  color: #00ffaa !important;
+}
+
+.timeline-head .text-muted {
+  color: #5a9a5a !important;
+}
+
+.timeline-body .text-muted {
+  color: #4a8a4a !important;
+}
+
+/* Timeline line */
+.timeline-body {
+  border-left: 2px solid #00ff4133 !important;
+}
+
+.timeline-card:before {
+  background-color: #0a0f0a !important;
+}
+
+/* Skills progress bars */
+.fw-bolder span,
+span.fw-bolder {
+  color: #00ff41 !important;
+}
+
+.progress {
+  background-color: #0d1f0d !important;
+  border: 1px solid #00ff4122 !important;
+}
+
+/* Contact form inputs */
+.form-control {
+  background: #0d1f0d !important;
+  border: 1px solid #00ff4144 !important;
+  color: #b0d4b0 !important;
+}
+
+.form-control:focus {
+  border-color: #00ff41 !important;
+  box-shadow: 0 0 0 0.2rem rgba(0,255,65,0.15) !important;
+  background: #0d1f0d !important;
+  color: #b0d4b0 !important;
+}
+
+.form-label {
+  color: #5a9a5a !important;
+}
+
+/* Buttons */
+.btn-info {
+  background: #00ff41 !important;
+  border-color: #00ff41 !important;
+  color: #000 !important;
+  font-weight: 700;
+  box-shadow: 0 0 16px #00ff4155 !important;
+}
+
+.btn-info:hover {
+  background: #00cc33 !important;
+  box-shadow: 0 0 24px #00ff4188 !important;
+}
+
+.btn-outline-light {
+  border-color: #00ff41 !important;
+  color: #00ff41 !important;
+}
+
+.btn-outline-light:hover {
+  background: #00ff4122 !important;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border-top: 1px solid #00ff4133;
+  color: #4a8a4a !important;
+}
+
+footer a {
+  color: #00ff41 !important;
+}
+
+footer .h4 {
+  color: #00ff41 !important;
+  text-shadow: 0 0 8px #00ff4155;
+}
+
+/* Avatar styling */
+.avatar {
+  display: inline-block;
+  padding: 4px !important;
+}
+
+.avatar img {
+  width: 170px !important;
+  height: 170px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border: 4px solid #00ff41 !important;
+  box-shadow: 0 0 16px #00ff41cc, 0 0 36px #00ff4166 !important;
+  background: transparent;
+  display: block;
+}
+
+/* Skill level color coding — light to dark green by expertise */
+.progress-bar.level-expert {
+  background: linear-gradient(90deg, #00cc33, #00ff41) !important;
+  box-shadow: 0 0 12px #00ff4199 !important;
+  color: #000 !important;
+}
+.progress-bar.level-advanced {
+  background: linear-gradient(90deg, #00882a, #00bb38) !important;
+  box-shadow: 0 0 10px #00bb3877 !important;
+  color: #000 !important;
+}
+.progress-bar.level-proficient {
+  background: linear-gradient(90deg, #005518, #007a22) !important;
+  box-shadow: 0 0 8px #007a2266 !important;
+  color: #ccffcc !important;
+}
+.progress-bar.level-intermediate {
+  background: linear-gradient(90deg, #002a0c, #004414) !important;
+  box-shadow: 0 0 6px #00441444 !important;
+  color: #88dd88 !important;
+}
+
+/* Override bg-info and bg-secondary to match green theme */
+.progress-bar.bg-info {
+  background: linear-gradient(90deg, #00882a, #00bb38) !important;
+  box-shadow: 0 0 10px #00bb3855 !important;
+  color: #000 !important;
+}
+.progress-bar.bg-secondary {
+  background: linear-gradient(90deg, #005518, #007a22) !important;
+  box-shadow: 0 0 8px #007a2244 !important;
+  color: #ccffcc !important;
+}
+
+/* ── Contact form floating label fix ── */
+/* Keep label above when field is focused or has content */
+.form-outline .form-control:focus ~ .form-label,
+.form-outline .form-control:not(:placeholder-shown) ~ .form-label {
+  transform: translateY(-1.4rem) translateX(0.1rem) scale(0.8) !important;
+  background: #0d1f0d !important;
+  padding: 0 4px !important;
+  color: #00ff41 !important;
+  z-index: 2 !important;
+}
+
+/* Base label position */
+.form-outline .form-label {
+  position: absolute !important;
+  top: 0.65rem !important;
+  left: 0.75rem !important;
+  transition: all 0.2s ease !important;
+  pointer-events: none !important;
+  color: #5a9a5a !important;
+  margin: 0 !important;
+  z-index: 1 !important;
+}
+
+/* Make sure outline wrapper is positioned */
+.form-outline {
+  position: relative !important;
+}
+
+/* Hide default MDB border glow on focus — use our own */
+.form-outline .form-control:focus {
+  border-color: #00ff41 !important;
+  box-shadow: 0 0 0 1px #00ff4166 !important;
+  outline: none !important;
+}
+
+/* Add placeholder so :not(:placeholder-shown) works */
+.form-outline .form-control::placeholder {
+  color: transparent !important;
+}
+
+
+
+/* Certification / warning timeline cards */
+.timeline-card-warning:before {
+  border-color: #ffd700 !important;
+}
+
+/* Link colors */
+a {
+  color: #00ff41 !important;
+}
+
+a:hover {
+  color: #00ffaa !important;
+}
+
+/* =============================================
+   END TERMINAL BACKGROUND STYLES
+   ============================================= */
+
+/* Timeline custom component */
+.timeline-card {
+  position: relative;
+  margin-left: 16px; }
+
+.timeline-card:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  top: 16px;
+  left: -12px;
+  border: 5px solid;
+  z-index: 2; }
+
+.timeline-body {
+  border-left: 2px solid #E6E9ED; }
+
+.timeline-card-primary:before {
+  border-color: var(--bs-primary); }
+
+.timeline-card-info:before {
+  border-color: var(--bs-info); }
+
+.timeline-card-secondary:before {
+  border-color: var(--bs-secondary); }
+
+.timeline-card-success:before {
+  border-color: var(--bs-teal); }
+
+html {
+  scroll-behavior: smooth; }
+
+html, body {
+  overflow-x: hidden; }
+
+.container {
+  max-width: 1140px; }
+
+.site-title {
+  font-size: 1.25rem;
+  line-height: 2.5rem; }
+
+.nav-link {
+  padding: 0;
+  font-size: 1rem;
+  line-height: 2.5rem;
+  color: inherit;
+  opacity: 0.8; }
+
+.header-social .nav-link {
+  font-size: 1.25rem; }
+
+.nav-link:hover,
+.nav-link:focus {
+  color: inherit;
+  opacity: 1; }
+
+.nav-item + .nav-item {
+  margin-left: 1rem; }
+
+.cover {
+  height: 500px; }
+
+.cover > img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: auto; }
+
+.progress-bar {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1px; }
+
+.text-small {
+  font-size: 0.85rem; }
+
+.text-teal {
+  color: var(--bs-teal); }
+
+footer a:not(.nav-link) {
+  color: inherit;
+  border-bottom: 1px dashed;
+  text-decoration: none;
+  cursor: pointer; }
+
+@media (min-width: 48em) {
+  .site-title {
+    float: left; }
+  .site-nav {
+    float: right; } }
+
+@media (max-width: 767px) {
+  /* disable animations on mobile */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important; }
+  .p-5 {
+    padding: 2.5rem 2rem !important; }
+  .portfolio-section .m-5 {
+    margin: 2rem 0 1rem !important; }
+  .portfolio-reverse {
+    flex-direction: column-reverse; }
+  .portfolio-reverse .text-end {
+    text-align: start !important; } }
+
+@media print {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important; }
+  body.bg-light {
+    background-color: #fff !important; }
+  .container {
+    width: auto;
+    max-width: 100%;
+    padding: 0; }
+  .cover {
+    height: 360px;
+    margin-bottom: 1.5rem; }
+  .cover > img {
+    display: none; }
+  .shadow-1-strong {
+    box-shadow: none !important; }
+  .resume-container > .my-5 {
+    margin: 0 !important; }
+  .my-5.p-5 {
+    padding: 1.5rem 0 !important; }
+  .about-section {
+    padding: 0 !important; }
+  .skills-section,
+  .work-experience-section,
+  .education-section,
+  .portfolio-section,
+  .reference-section,
+  .contact-section {
+    padding: 0 !important; }
+  .page-break {
+    padding-top: 5rem;
+    page-break-before: always; } }

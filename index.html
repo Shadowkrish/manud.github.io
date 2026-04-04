@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manu D – System Administrator</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    </noscript>
+    <link href="css/font-awesome/css/all.min.css?ver=1.2.1" rel="stylesheet">
+    <link href="css/mdb.min.css?ver=1.2.1" rel="stylesheet">
+    <link href="css/aos.css?ver=1.2.1" rel="stylesheet">
+    <link href="css/main.css?ver=1.2.1" rel="stylesheet">
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body class="bg-light" id="top">
+    <!-- Live Terminal Background Canvas -->
+    <canvas id="terminal-bg"></canvas>
+    <script>
+    (function() {
+      const canvas = document.getElementById('terminal-bg');
+      const ctx = canvas.getContext('2d');
+
+      const commands = [
+        '$ systemctl status nginx',
+        'Active: active (running) since Mon 2024-01-15',
+        '$ top -bn1 | grep "Cpu(s)"',
+        '%Cpu(s):  2.3 us,  0.8 sy,  0.0 ni, 96.5 id',
+        '$ df -h | grep /dev/sd',
+        '/dev/sda1  500G  120G  380G  24% /',
+        '$ netstat -tulnp | grep LISTEN',
+        'tcp  0.0.0.0:22   0.0.0.0:*   LISTEN  sshd',
+        'tcp  0.0.0.0:443  0.0.0.0:*   LISTEN  nginx',
+        '$ vmware-cmd --list',
+        '/vmfs/volumes/datastore1/rhel8/rhel8.vmx',
+        '$ zabbix_get -s 192.168.1.10 -k system.cpu.load',
+        '0.24',
+        '$ qualys-scan --target 10.0.0.0/24 --type vuln',
+        '[INFO] Scanning 254 hosts...',
+        '[OK] 7 critical CVEs found. Remediation started.',
+        '$ splunk search "index=syslog severity=CRITICAL"',
+        'Retrieving events... 0 results in last 24h OK',
+        '$ commvault backup --job daily-full --status',
+        'Job: 4821 | Completed | Data: 52.3 TB',
+        '$ intune-report --devices --os Windows',
+        'Total: 1547 | Compliant: 1543 | Non-compliant: 4',
+        '$ jamf policy --target all-macs --event checkin',
+        'Sending policy to 312 macOS devices...',
+        '$ python3 lidar_validate.py --input sensor_data/',
+        'Processing 18432 frames... Accuracy: 99.2%',
+        '$ prtg-alert --last 24h --severity critical',
+        'No critical alerts in last 24 hours. OK',
+        '$ nutanix-cli vm list --powerstate on',
+        '42 VMs running | 3 paused | 0 errors',
+        '$ cyberark-vault list-accounts --safe IT-Prod',
+        'Accounts: 84 | Last rotation: 2024-01-14 OK',
+        '$ nexpose scan --site "Internal-Network"',
+        'Hosts discovered: 1247 | Vulns: 12 critical',
+        '$ uptime',
+        'up 347 days, 12:34 | load avg: 0.12 0.10 0.09',
+        '$ ansible-playbook hardening.yml --check',
+        'PLAY [Apply OS Hardening]',
+        'ok: [web-srv-01] | ok: [web-srv-02]',
+        'PLAY RECAP: 12 ok, 0 changed, 0 failed',
+        '$ snow-incident --list --priority 1',
+        'INC0042817  P1  Resolved  DB Server Unreachable',
+        '$ ipam-query --subnet 192.168.0.0/16',
+        'Total: 65534 | Used: 41832 | Free: 23702',
+        '$ active-directory-query --user manu.d',
+        'CN=Manu D,OU=IT,DC=corp,DC=local',
+        'memberOf: Domain Admins, IT-Infrastructure',
+        '$ tail -f /var/log/syslog | grep ERROR',
+        '[OK] No errors in last 500 lines.',
+        '$ hyper-v Get-VM | Select Name,State',
+        'WIN-APP-01    Running',
+        'WIN-DB-02     Running',
+        'RHEL-MON-01   Running',
+      ];
+
+      let lines = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function initLines() {
+        lines = [];
+        const maxLines = Math.floor(canvas.height / 16) + 10;
+        for (let i = 0; i < maxLines; i++) {
+          lines.push({
+            text: commands[Math.floor(Math.random() * commands.length)],
+            x: Math.random() * (canvas.width - 420),
+            y: Math.random() * canvas.height,
+            speed: 0.15 + Math.random() * 0.45,
+            alpha: 0.40 + Math.random() * 0.20,
+            size: 10 + Math.floor(Math.random() * 3),
+            color: Math.random() > 0.15 ? '#00ff41' : '#00ccff',
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0a0f0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(0,255,65,0.04)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < canvas.width; x += 40) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += 40) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+
+        lines.forEach(line => {
+          ctx.globalAlpha = line.alpha;
+          ctx.fillStyle = line.color;
+          ctx.font = line.size + 'px "Courier New", monospace';
+          ctx.fillText(line.text, line.x, line.y);
+          line.y += line.speed;
+          if (line.y > canvas.height + 20) {
+            line.y = -20;
+            line.x = Math.random() * (canvas.width - 420);
+            line.text = commands[Math.floor(Math.random() * commands.length)];
+            line.speed = 0.15 + Math.random() * 0.45;
+            line.alpha = 0.04 + Math.random() * 0.12;
+          }
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => { resize(); initLines(); });
+      resize();
+      initLines();
+      draw();
+    })();
+    </script>
+
+    <header class="d-print-none">
+      <div class="container text-center text-lg-left">
+        <div class="pt-4 clearfix">
+          <h1 class="site-title mb-0">Manu D</h1>
+          <div class="site-nav">
+            <nav role="navigation">
+              <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="#about" title="About"><span class="menu-title">About</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills" title="Skills"><span class="menu-title">Skills</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience" title="Experience"><span class="menu-title">Experience</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#education" title="Education"><span class="menu-title">Education</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#certifications" title="Certifications"><span class="menu-title">Certifications</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact" title="Contact"><span class="menu-title">Contact</span></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="container">
+        <div class="resume-container">
+
+          <!-- INTRO / HERO -->
+          <div class="shadow-1-strong bg-white my-5" id="intro">
+            <div class="bg-info text-white">
+              <div class="cover bg-image"><img src="images/header-background.jpg"/>
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);backdrop-filter: blur(2px);">
+                  <div class="text-center p-5">
+                    <div class="avatar p-1"><img class="shadow-2-strong" src="images/avatar.jpeg" width="170" height="170"/></div>
+                    <div class="header-bio mt-3">
+                      <div data-aos="zoom-in" data-aos-delay="0">
+                        <h2 class="h1">Manu D</h2>
+                        <p>System Administrator &middot; 4+ Years Enterprise IT Experience</p>
+                      </div>
+                      <div class="header-social mb-3 d-print-none" data-aos="zoom-in" data-aos-delay="200">
+                        <nav role="navigation">
+                          <ul class="nav justify-content-center">
+                            <li class="nav-item"><a class="nav-link" href="https://github.com/" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/manu-d-a41522283/" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a></li>
+                          </ul>
+                        </nav>
+                      </div>
+                      <div class="d-print-none">
+                        <a class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3" href="Manu.D_CV.pdf" data-aos="fade-right" data-aos-delay="700">Download CV</a>
+                        <a class="btn btn-info btn-lg shadow-sm mt-1" href="#contact" data-aos="fade-left" data-aos-delay="700">Hire Me</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ABOUT -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="about">
+            <div class="about-section">
+              <div class="row">
+                <div class="col-md-6">
+                  <h2 class="h2 fw-light mb-4">About Me</h2>
+                  <p>Hello! I'm <strong>Manu D</strong>, a System Administrator with <strong>4+ years of experience</strong> managing enterprise IT infrastructure across Windows Server, RHEL, and macOS environments.</p>
+                  <p>Experienced in virtualization using VMware, Nutanix, and Hyper-V, and in identity and endpoint management with Active Directory, Azure AD, Intune, and JAMF Pro. Strong background in vulnerability management, system hardening, and security compliance using Qualys, Nexpose, and CyberArk aligned with ITIL practices. Hands-on experience in backup and recovery with Commvault and NetBackup to ensure high availability and business continuity. Skilled in monitoring, incident resolution, documentation, and problem management to deliver secure and reliable infrastructure.</p>
+                </div>
+                <div class="col-md-5 offset-lg-1">
+                  <div class="row mt-2">
+                    <h2 class="h2 fw-light mb-4">Bio</h2>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="far fa-envelope pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Email</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2"><a href="mailto:manu.d.rise@gmail.com">manu.d.rise@gmail.com</a></div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="fas fa-phone pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Phone</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2">+91 9344592287</div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="fas fa-map-marker-alt pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Location</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2">Kanyakumari, India</div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="fas fa-briefcase pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Experience</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2">4+ Years</div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="fas fa-building pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Current Employer</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2">Tata Consultancy Services</div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pb-2 fw-bolder"><i class="fas fa-language pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Languages</div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="pb-2">English, Tamil, Malayalam</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SKILLS -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="skills">
+            <div class="skills-section">
+              <h2 class="h2 fw-light mb-4">Technical Skills</h2>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3"><span class="fw-bolder">Operating Systems — Windows Server / Linux (RHEL) / macOS</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-expert" role="progressbar" data-aos="zoom-in-right" data-aos-delay="100" data-aos-anchor=".skills-section" style="width: 95%;" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">Expert</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Virtualization — VMware ESXi / Nutanix / Hyper-V</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-expert" role="progressbar" data-aos="zoom-in-right" data-aos-delay="200" data-aos-anchor=".skills-section" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">Expert</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Cloud & Identity — Azure AD / Active Directory / GPO</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-expert" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">Expert</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Endpoint Management — Intune / JAMF Pro / HPDM</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Security — Qualys / Nexpose / CyberArk / ITIL</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="500" data-aos-anchor=".skills-section" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Monitoring — Splunk / Zabbix / PRTG</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="600" data-aos-anchor=".skills-section" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3"><span class="fw-bolder">Backup & Recovery — Commvault / Veritas NetBackup / Tape Library</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="200" data-aos-anchor=".skills-section" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Networking — DNS / DHCP / DDI (IPAM)</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">ITSM — ServiceNow / Change Mgmt / KT / Documentation</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-advanced" role="progressbar" data-aos="zoom-in-right" data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Advanced</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Automation & Scripting — Python</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-intermediate" role="progressbar" data-aos="zoom-in-right" data-aos-delay="500" data-aos-anchor=".skills-section" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                    </div>
+                  </div>
+                  <div class="mb-3"><span class="fw-bolder">Data & Specialized — Image Annotation / LiDAR QC / CSV Processing</span>
+                    <div class="progress my-2 rounded" style="height: 20px">
+                      <div class="progress-bar level-proficient" role="progressbar" data-aos="zoom-in-right" data-aos-delay="600" data-aos-anchor=".skills-section" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Proficient</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXPERIENCE -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+            <div class="work-experience-section">
+              <h2 class="h2 fw-light mb-4">Work Experience</h2>
+              <div class="timeline">
+
+                <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">Server Administrator – Internal Digital Infrastructure Services <span class="text-muted h6">at Tata Consultancy Services</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div class="text-muted text-small mb-3">2023 – Present &nbsp;|&nbsp; Tools: Nutanix, VMware, Commvault, HPDM, Splunk, Zabbix</div>
+                    <ul>
+                      <li>Administer and support location-based servers and endpoints across Windows, Linux, and macOS environments using Active Directory, Intune, VMware, Nutanix, and DDI (DNS, DHCP, IPAM).</li>
+                      <li>Manage server lifecycle activities including provisioning, access-based configuration, maintenance, and secure decommissioning of servers when no longer required.</li>
+                      <li>Ensure high availability and infrastructure stability by proactively monitoring systems using <strong>Splunk</strong> and <strong>Zabbix</strong> and addressing performance or availability issues.</li>
+                      <li>Conduct regular vulnerability assessments using <strong>Qualys</strong> and <strong>Nexpose</strong>, analyze findings, and implement timely remediation to maintain security compliance.</li>
+                      <li>Manage backup and recovery operations using <strong>Commvault</strong> and <strong>NetBackup</strong> to ensure data protection and business continuity.</li>
+                      <li>Implement new corporate testing initiatives and infrastructure solutions in line with organizational standards and security requirements.</li>
+                      <li>Maintain detailed documentation of infrastructure changes, access records, and audit evidence across shared repositories for compliance and reviews.</li>
+                      <li>Provide knowledge transfer (KT) to new joiners and act as a Problem Manager, coordinating resolution for recurring and location-based infrastructure issues.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="200">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">Command Center Administrator – LGC Biosearch Technologies <span class="text-muted h6">at Tata Consultancy Services</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div class="text-muted text-small mb-3">2022 – 2023 &nbsp;|&nbsp; Tools: PRTG, Active Directory</div>
+                    <ul>
+                      <li>Monitored project-based servers, storage systems, and network devices using <strong>PRTG</strong> to ensure performance, availability, and alert compliance.</li>
+                      <li>Analyzed system alerts and incidents, promptly notifying respective vertical and support teams to initiate corrective actions.</li>
+                      <li>Coordinated and managed bridge calls with multiple technical teams to troubleshoot and resolve infrastructure issues efficiently.</li>
+                      <li>Administered <strong>Active Directory</strong> tasks, including client-side user account creation and access management.</li>
+                      <li>Utilized jump servers to securely access and support restricted systems in accordance with operational and security policies.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">Data Annotator – ZF Annotate (Autonomous Driving Project) <span class="text-muted h6">at Tata Consultancy Services</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div class="text-muted text-small mb-3">2021 – 2022 &nbsp;|&nbsp; Tools: Image Annotation, LiDAR QC, Python Scripts</div>
+                    <ul>
+                      <li>Contributed to an autonomous driving project by annotating traffic signs, traffic lights, lane markings, and road elements to support safe vehicle navigation and traffic rule compliance.</li>
+                      <li>Used image annotation tools to label datasets and export structured outputs in CSV format for model training and validation.</li>
+                      <li>Performed quality control using <strong>LiDAR QC tools</strong> to verify annotation accuracy and improve spatial clarity.</li>
+                      <li>Applied <strong>Python scripts</strong> to reproject image markings and correct alignment issues during the QC process.</li>
+                      <li>Delivered high-accuracy annotated datasets that enabled driving alerts, caution detection, and safer autonomous decision-making.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="education">
+            <div class="education-section">
+              <h2 class="h2 fw-light mb-4">Education</h2>
+              <div class="timeline">
+                <div class="timeline-card timeline-card-success" data-aos="fade-in" data-aos-delay="0">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">B.Sc. Computer Science <span class="text-muted h6">from Annai Velankanni College</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div class="text-muted text-small mb-3">2018 – 2021</div>
+                    <div>Completed a Bachelor of Science in Computer Science, building a strong foundation in computing principles, programming, networking, and systems administration.</div>
+                    <div class="mt-3">
+                      <strong style="color:#00ff41;">Academic Project:</strong> <span style="color:#00ffaa;">Secure Text Communication System</span>
+                      <p class="mt-2">Designed and developed an application that converts plain text messages into encrypted format before transmission to the receiver. Implemented a decryption mechanism requiring a dedicated program and key to decode the message, ensuring data confidentiality during communication. The project focused on basic cryptography concepts, secure data transfer, and controlled access to information.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERTIFICATIONS -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="certifications">
+            <div class="education-section">
+              <h2 class="h2 fw-light mb-4">Certifications</h2>
+              <div class="timeline">
+                <div class="timeline-card timeline-card-warning" data-aos="fade-in" data-aos-delay="0">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">Jamf Certified Associate – Jamf Pro <span class="text-muted h6">by Jamf</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div>Certified in deploying, managing, and securing Apple devices at enterprise scale using Jamf Pro.</div>
+                  </div>
+                </div>
+                <div class="timeline-card timeline-card-warning" data-aos="fade-in" data-aos-delay="200">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">AZ-104: Microsoft Azure Administrator <span class="text-muted h6">by Microsoft</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div>Certified in implementing, managing, and monitoring Azure environments — identity, governance, storage, compute, and virtual networks.</div>
+                  </div>
+                </div>
+                <div class="timeline-card timeline-card-warning" data-aos="fade-in" data-aos-delay="400">
+                  <div class="timeline-head px-4 pt-3">
+                    <div class="h5">AZ-900: Microsoft Azure Fundamentals <span class="text-muted h6">by Microsoft</span></div>
+                  </div>
+                  <div class="timeline-body px-4 pb-4">
+                    <div>Foundational certification covering core Azure cloud concepts, services, pricing, SLAs, and compliance.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTACT -->
+          <div class="shadow-1-strong bg-white my-5 p-5" id="contact">
+            <div class="contant-section">
+              <h2 class="h2 fw-light text mb-4">Contact</h2>
+              <div class="row mb-4">
+                <div class="col-md-5" data-aos="fade-left" data-aos-delay="200">
+                  <div class="mt-1">
+                    <div class="h6"><i class="fas fa-phone pe-2 text-muted" style="width:24px;opacity:0.85;"></i> +91 9344592287</div>
+                    <div class="h6"><i class="far fa-envelope pe-2 text-muted" style="width:24px;opacity:0.85;"></i> manu.d.rise@gmail.com</div>
+                    <div class="h6"><i class="fas fa-map-marker-alt pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Kanyakumari, India</div>
+                  </div>
+                  <div class="mt-5 d-print-none">
+                    <!-- Success message -->
+                    <div data-fs-success style="display:none; padding: 12px 16px; margin-bottom: 16px; border: 1px solid #00ff41; border-radius: 6px; color: #00ff41; background: rgba(0,255,65,0.08); font-weight: 600;">
+                      ✅ Message sent! I'll get back to you soon.
+                    </div>
+                    <!-- Error message -->
+                    <div data-fs-error style="display:none; padding: 12px 16px; margin-bottom: 16px; border: 1px solid #ff4444; border-radius: 6px; color: #ff6666; background: rgba(255,68,68,0.08); font-weight: 600;">
+                      ❌ Something went wrong. Please try again.
+                    </div>
+
+                    <form id="contact-form">
+                      <div class="form-outline mb-4">
+                        <input type="text" id="name" name="name" class="form-control" placeholder=" " data-fs-field required/>
+                        <label class="form-label" for="name">Name</label>
+                        <span data-fs-error="name" style="color:#ff6666; font-size:0.8rem;"></span>
+                      </div>
+                      <div class="form-outline mb-4">
+                        <input type="email" id="email" name="email" class="form-control" placeholder=" " data-fs-field required/>
+                        <label class="form-label" for="email">Email address</label>
+                        <span data-fs-error="email" style="color:#ff6666; font-size:0.8rem;"></span>
+                      </div>
+                      <div class="form-outline mb-4">
+                        <textarea class="form-control" style="resize: none;" id="message" name="message" rows="4" placeholder=" " data-fs-field required></textarea>
+                        <label class="form-label" for="message">Message</label>
+                        <span data-fs-error="message" style="color:#ff6666; font-size:0.8rem;"></span>
+                      </div>
+                      <button class="btn btn-info btn-block mb-4" type="submit" data-fs-submit-btn>SEND</button>
+                    </form>
+
+                    <script>
+                      window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+                      formspree('initForm', { formElement: '#contact-form', formId: 'mvzvvzqz' });
+                    </script>
+                    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+                  </div>
+                </div>
+                <div class="col-md-7 d-print-none" data-aos="zoom-in" data-aos-delay="100">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126282.44513792392!2d77.4897!3d8.0883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b04ef44a9d49e5d%3A0x512d9b5ebf3b4a4a!2sKanyakumari%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1614183731149!5m2!1sen!2sin" width="500" height="400" style="border:0;width:100%;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--<footer class="pt-4 pb-4 text-muted text-center d-print-none">
+      <div class="container">
+        <div class="my-3">
+          <div class="h4">Manu D</div>
+          <div class="footer-nav">
+            <nav role="navigation">
+              <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="https://github.com/" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="text-small">
+          <div class="mb-1">&copy; Manu D. All rights reserved.</div>
+          <div>Design - <a href="https://templateflip.com/" target="_blank">TemplateFlip</a></div>
+        </div>
+      </div>
+    </footer>-->
+
+    <script src="scripts/mdb.min.js?ver=1.2.1"></script>
+    <script src="scripts/aos.js?ver=1.2.1"></script>
+    <script src="scripts/main.js?ver=1.2.1"></script>
+  </body>
+</html>

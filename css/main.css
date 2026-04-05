@@ -162,22 +162,21 @@ footer .h4 {
 
 /* Avatar styling */
 .avatar {
-  display: inline-block;
-  padding: 4px !important;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  margin: 0 auto;
 }
 
 .avatar img {
-  width: 170px !important;
-  height: 170px !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-  object-position: center top !important;
-  border: 4px solid #00ff41 !important;
-  box-shadow: 0 0 16px #00ff41cc, 0 0 36px #00ff4166 !important;
-  background: transparent;
-  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
-
 /* Skill level color coding — light to dark green by expertise */
 .progress-bar.level-expert {
   background: linear-gradient(90deg, #5aeb3d, #72d68b) !important;

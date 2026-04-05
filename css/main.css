@@ -27,12 +27,12 @@ header {
 
 header .site-title,
 header .nav-link {
-  color: #00ff41 !important;
-  text-shadow: 0 0 8px #00ff4188;
+  color: #ffffff !important;
+  text-shadow: none;
 }
 
 header .nav-link:hover {
-  color: #00ffaa !important;
+  color: #cccccc !important;
   opacity: 1;
 }
 
@@ -48,8 +48,8 @@ header .nav-link:hover {
 /* Section headings */
 .h2.fw-light,
 h2.h2 {
-  color: #00ff41 !important;
-  text-shadow: 0 0 12px #00ff4155;
+  color: #ffffff !important;
+  text-shadow: none;
 }
 
 /* Body text */
@@ -57,29 +57,29 @@ h2.h2 {
 .timeline-body div,
 .timeline-body li,
 .timeline-body ul {
-  color: #b0d4b0 !important;
+  color: #e0e0e0 !important;
 }
 
 /* Bio labels */
 .fw-bolder {
-  color: #00ff41 !important;
+  color: #ffffff !important;
 }
 
 .pb-2:not(.fw-bolder) {
-  color: #8ccc8c !important;
+  color: #cccccc !important;
 }
 
 /* Timeline head text */
 .timeline-head .h5 {
-  color: #00ffaa !important;
+  color: #ffffff !important;
 }
 
 .timeline-head .text-muted {
-  color: #5a9a5a !important;
+  color: #aaaaaa !important;
 }
 
 .timeline-body .text-muted {
-  color: #4a8a4a !important;
+  color: #999999 !important;
 }
 
 /* Timeline line */
@@ -94,7 +94,7 @@ h2.h2 {
 /* Skills progress bars */
 .fw-bolder span,
 span.fw-bolder {
-  color: #00ff41 !important;
+  color: #ffffff !important;
 }
 
 .progress {
@@ -106,18 +106,18 @@ span.fw-bolder {
 .form-control {
   background: #0d1f0d !important;
   border: 1px solid #00ff4144 !important;
-  color: #b0d4b0 !important;
+  color: #ffffff !important;
 }
 
 .form-control:focus {
   border-color: #00ff41 !important;
   box-shadow: 0 0 0 0.2rem rgba(0,255,65,0.15) !important;
   background: #0d1f0d !important;
-  color: #b0d4b0 !important;
+  color: #ffffff !important;
 }
 
 .form-label {
-  color: #5a9a5a !important;
+  color: #aaaaaa !important;
 }
 
 /* Buttons */
@@ -141,13 +141,14 @@ span.fw-bolder {
 
 .btn-outline-light:hover {
   background: #00ff4122 !important;
+  color: #00ff41 !important;
 }
 
 /* Footer */
 footer {
   background: rgba(0, 0, 0, 0.85) !important;
   border-top: 1px solid #00ff4133;
-  color: #4a8a4a !important;
+  color: #aaaaaa !important;
 }
 
 footer a {
@@ -155,8 +156,8 @@ footer a {
 }
 
 footer .h4 {
-  color: #00ff41 !important;
-  text-shadow: 0 0 8px #00ff4155;
+  color: #ffffff !important;
+  text-shadow: none;
 }
 
 /* Avatar styling */
@@ -179,24 +180,28 @@ footer .h4 {
 
 /* Skill level color coding — light to dark green by expertise */
 .progress-bar.level-expert {
-  background: linear-gradient(90deg, #00cc33, #00ff41) !important;
+  background: linear-gradient(90deg, #5aeb3d, #72d68b) !important;
   box-shadow: 0 0 12px #00ff4199 !important;
   color: #000 !important;
+  font-weight: bold;
 }
 .progress-bar.level-advanced {
-  background: linear-gradient(90deg, #00882a, #00bb38) !important;
+  background: linear-gradient(90deg, #5aeb3d, #72d68b) !important;
   box-shadow: 0 0 10px #00bb3877 !important;
   color: #000 !important;
+  font-weight: bold;
 }
 .progress-bar.level-proficient {
-  background: linear-gradient(90deg, #005518, #007a22) !important;
+  background: linear-gradient(90deg, #5aeb3d, #72d68b) !important;
   box-shadow: 0 0 8px #007a2266 !important;
-  color: #ccffcc !important;
+  color: #000 !important;
+  font-weight: bold;
 }
 .progress-bar.level-intermediate {
-  background: linear-gradient(90deg, #002a0c, #004414) !important;
+  background: linear-gradient(90deg, #5aeb3d, #72d68b) !important;
   box-shadow: 0 0 6px #00441444 !important;
-  color: #88dd88 !important;
+  color: #000 !important;
+  font-weight: bold;
 }
 
 /* Override bg-info and bg-secondary to match green theme */
@@ -218,7 +223,7 @@ footer .h4 {
   transform: translateY(-1.4rem) translateX(0.1rem) scale(0.8) !important;
   background: #0d1f0d !important;
   padding: 0 4px !important;
-  color: #00ff41 !important;
+  color: #ffffff !important;
   z-index: 2 !important;
 }
 
@@ -260,10 +265,21 @@ footer .h4 {
 
 /* Link colors */
 a {
-  color: #00ff41 !important;
+  color: #ffffff !important;
 }
 
 a:hover {
+  color: #cccccc !important;
+}
+
+/* Keep social icons green */
+.header-social .nav-link,
+.footer-nav .nav-link {
+  color: #00ff41 !important;
+}
+
+.header-social .nav-link:hover,
+.footer-nav .nav-link:hover {
   color: #00ffaa !important;
 }
 

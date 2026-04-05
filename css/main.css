@@ -176,6 +176,7 @@ footer .h4 {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  box-shadow: none !important;  /* ← add this */
 }
 /* Skill level color coding — light to dark green by expertise */
 .progress-bar.level-expert {
